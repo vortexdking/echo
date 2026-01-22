@@ -65,7 +65,8 @@ app.post("/signals", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("API listening on", PORT));
 app.get("/", (req, res) => {
   res.send("Echo API is running ✅ Try /health or /signals");
 });
+
+app.listen(PORT, () => console.log("API listening on", PORT));
