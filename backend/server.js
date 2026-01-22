@@ -16,6 +16,8 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
 
 app.get("/health", (req, res) => res.json({ ok: true }));
 
