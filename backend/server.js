@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pg from "pg";
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
 
 dotenv.config();
 
@@ -16,8 +18,6 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
-import dns from "dns";
-dns.setDefaultResultOrder("ipv4first");
 
 app.get("/health", (req, res) => res.json({ ok: true }));
 
