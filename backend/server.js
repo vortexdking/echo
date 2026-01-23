@@ -12,6 +12,20 @@ app.use(cors());
 app.use(express.json());
 
 const { Pool } = pg;
+app.post("/auth/anonymous", async (req, res) => {
+  const { secret } = req.body;
+  if (!secret) return res.status(400).json({ error: "secret_required" });
+
+  // simple anon user object
+  res.json({
+    id: secret,
+    username: "Anon_" + secret.slice(-4),
+    color: "#6366f1"
+  });
+});
+app.post("/votes", async (req, res) => {
+  res.json({ ok: true });
+});
 
 // Use Supabase connection string in DATABASE_URL
 const pool = new Pool({
