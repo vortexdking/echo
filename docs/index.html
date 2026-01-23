@@ -2409,8 +2409,38 @@
             }
         });
 
-        enterApp();     // force show UI
-fetchSignals(); // try load posts
+       async function init() {
+  // load saved users db + session
+  usersDB = JSON.parse(localStorage.getItem('echo_users') || "{}");
+  const saved = localStorage.getItem('echo_sess');
+
+  renderCategoryPopover();
+  updateBadgeUI();
+
+  // ✅ If user already logged in before, go straight to app
+  if (saved) {
+    user = JSON.parse(saved);
+    document.getElementById('app-view').style.display = 'block';
+    document.getElementById('landing-view').style.display = 'none';
+    document.getElementById('auth-view').style.display = 'none';
+
+    updateAvatarUI();
+    await fetchSignals();
+    renderFilters();
+    renderSidebar();
+    renderFeed('all');
+    lucide.createIcons({ attrs: { 'stroke-width': '1.5' } });
+    return;
+  }
+
+  // ✅ Otherwise show landing page first
+  document.getElementById('landing-view').style.display = 'flex';
+  document.getElementById('auth-view').style.display = 'none';
+  document.getElementById('app-view').style.display = 'none';
+
+  lucide.createIcons({ attrs: { 'stroke-width': '1.5' } });
+}
+
     </script>
 </body>
 </html>
