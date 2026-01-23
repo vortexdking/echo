@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pg from "pg";
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
 
 dotenv.config();
 
@@ -65,4 +67,8 @@ app.post("/signals", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+app.get("/", (req, res) => {
+  res.send("Echo API is running ✅ Try /health or /signals");
+});
+
 app.listen(PORT, () => console.log("API listening on", PORT));
